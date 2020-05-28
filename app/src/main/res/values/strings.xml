@@ -4,7 +4,6 @@
     <string name="sort_by_date">Sort by Date (ASC)</string>
     <string name="sort_by_due">Sort by Due Data (ASC)</string>
     <string name="search">Search</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="create_date">Create: %1$s</string>
+    <string name="edited_date">Edit: %1$s</string>
 </resources>

@@ -24,14 +24,40 @@
             android:orientation="vertical"
             android:padding="@dimen/card_padding">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="@dimen/between_text_sm">
+
+                <TextView
+                    android:id="@+id/txt_todo_create"
+                    style="@style/TextAppearance.AppCompat.Caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/card_margin"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    tools:text="Created: 33 Desember 20200" />
+
+                <TextView
+                    android:id="@+id/txt_todo_edit"
+                    style="@style/TextAppearance.AppCompat.Caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/between_text"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    tools:text="Edited at: 33 Desember 20200" />
+
+            </LinearLayout>
+
             <TextView
                 android:id="@+id/txt_todo_name"
                 style="@style/TextAppearance.AppCompat.Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/between_text"
-                android:ellipsize="end"
-                android:maxLines="1"
                 tools:text="Ambil makanan dari super market" />
 
             <TextView
@@ -41,8 +67,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/between_text"
-                android:ellipsize="end"
-                android:maxLines="2"
                 tools:text="Ambil makanan yang disuru Ambil makanan yang disuru Ambil makanan yang disuru Ambil makanan yang disuru Orang Tua Lorem Ipsum DOlor reng difnesnfwo" />
 
             <TextView

@@ -17,6 +17,11 @@ class TodoAdapter(private val listTodo: ArrayList<Todo>) :
                 txt_todo_name.text = itemTodo.name
                 txt_todo_desc.text = itemTodo.desc
                 txt_todo_due.text = itemTodo.dueDate
+                txt_todo_create.text =
+                    String.format(resources.getString(R.string.create_date), itemTodo.created)
+                txt_todo_edit.text = if (itemTodo.edited != null)
+                    String.format(resources.getString(R.string.edited_date), itemTodo.edited)
+                else String.format(resources.getString(R.string.edited_date), "Not yet edited")
             }
         }
     }

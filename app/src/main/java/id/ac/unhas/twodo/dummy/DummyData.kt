@@ -36,6 +36,28 @@ object DummyData {
         "13 Desember 2019"
     )
 
+    private val created = arrayOf(
+        "12 Desember 2001",
+        "32 Maret 3924",
+        "1 April 2032",
+        "33 September 1253",
+        "53 Agustur 2012",
+        "20 Januari 2101",
+        "5 Agustus 2020",
+        "31 Desember 2019"
+    )
+
+    private val edited = arrayOf(
+        "13 Desember 2001",
+        null,
+        null,
+        null,
+        "53 Agustur 2012",
+        null,
+        "12 Agustus 2020",
+        "32 Desember 2019"
+    )
+
     val listData: ArrayList<Todo>
         get() {
             val list = arrayListOf<Todo>()
@@ -44,6 +66,8 @@ object DummyData {
                 todo.name = todoNames[position]
                 todo.desc = todoDesc[position]
                 todo.dueDate = todoDue[position]
+                todo.created = created[position]
+                todo.edited = edited[position]
                 list.add(todo)
             }
             return list
