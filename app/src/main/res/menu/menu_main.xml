@@ -3,8 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="id.ac.unhas.twodo.MainActivity">
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:id="@+id/action_search"
+        android:icon="@drawable/baseline_search_24"
+        android:title="@string/search"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_sort_date"
+        android:title="@string/sort_by_date"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_sort_due"
+        android:title="@string/sort_by_due"
         app:showAsAction="never" />
 </menu>
