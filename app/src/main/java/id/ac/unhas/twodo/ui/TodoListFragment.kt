@@ -1,16 +1,19 @@
 package id.ac.unhas.twodo.ui
 
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import id.ac.unhas.twodo.MainActivity
 import id.ac.unhas.twodo.R
 import id.ac.unhas.twodo.model.Todo
 import id.ac.unhas.twodo.ui.dialog.EditDialogFragment
@@ -34,12 +37,20 @@ class TodoListFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_todo_list, container, false)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.getTodos()?.observe(viewLifecycleOwner, Observer {
-            Log.d("test", it.toString())
-            adapter = TodoAdapter(it)
+            val sortedList =
+                if (MainActivity.isSortByDateCreatedAsc || MainActivity.isSortByDateCreatedDesc) {
+                    MainActivity.sortDate(it)
+                } else {
+                    MainActivity.sortDue(it)
+                }
+
+            Log.d("test", sortedList.toString())
+            adapter = TodoAdapter(sortedList)
             rv_todo.adapter = adapter
 
             adapter.setOnItemClickCallback(object : TodoAdapter.OnItemClickCallback {

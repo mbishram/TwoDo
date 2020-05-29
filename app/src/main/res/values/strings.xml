@@ -3,6 +3,8 @@
     <string name="action_settings">Settings</string>
     <string name="sort_by_date">Sort by Date (ASC)</string>
     <string name="sort_by_due">Sort by Due Data (ASC)</string>
+    <string name="sort_by_date_desc">Sort by Date (DESC)</string>
+    <string name="sort_by_due_desc">Sort by Due Data (DESC)</string>
     <string name="search">Search</string>
     <string name="create_date">Created at %1$s</string>
     <string name="edited_date">Edited at %1$s</string>

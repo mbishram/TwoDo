@@ -22,7 +22,17 @@
         app:showAsAction="never" />
 
     <item
+        android:id="@+id/action_sort_date_desc"
+        android:title="@string/sort_by_date_desc"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/action_sort_due"
         android:title="@string/sort_by_due"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_sort_due_desc"
+        android:title="@string/sort_by_due_desc"
         app:showAsAction="never" />
 </menu>

@@ -10,7 +10,6 @@ class TodoViewModel(application: Application) : AndroidViewModel(application) {
     private var todoRepository = TodoRepository(application)
     private var todos: LiveData<List<Todo>>? = todoRepository.getTodos()
 
-
     fun getTodos(): LiveData<List<Todo>>? {
         return todos
     }
