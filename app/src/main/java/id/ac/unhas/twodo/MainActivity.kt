@@ -6,6 +6,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import id.ac.unhas.twodo.ui.TodoListFragment
 import id.ac.unhas.twodo.ui.dialog.EditDialogFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -54,7 +55,9 @@ class MainActivity : AppCompatActivity() {
                 dialog.dismiss()
             }
             .setPositiveButton(resources.getString(R.string.accept)) { dialog, which ->
-                TodoListFragment.viewModel.deleteAllData(view)
+                Snackbar.make(view, "All Todo are Deleted!", Snackbar.LENGTH_LONG)
+                    .show()
+                TodoListFragment.viewModel.deleteAllTodos()
             }
             .show()
     }

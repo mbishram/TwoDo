@@ -64,7 +64,6 @@ class EditDialogFragment(private val data: Todo?, private val prevView: View?) :
                         calendar.get(Calendar.DAY_OF_MONTH)
                     )
 
-            Log.d("Test", nowDate.toString())
             DatePickerDialog(
                 requireContext(), date, nowDate[0], nowDate[1] - 1, nowDate[2]
             ).show()
@@ -90,6 +89,7 @@ class EditDialogFragment(private val data: Todo?, private val prevView: View?) :
         save_form.setOnClickListener {
             val newTodo = Todo()
 
+            newTodo.id = data?.id
             newTodo.name = input_name.text.toString()
             newTodo.desc = input_note.text.toString()
             newTodo.dueDate = input_due_date.text.toString()
@@ -157,9 +157,25 @@ class EditDialogFragment(private val data: Todo?, private val prevView: View?) :
         }
 
         if (this.data == null) {
-            TodoListFragment.viewModel.addData(data, prevView!!)
+            val testEllipsize = if (data.name.length > 24) "..." else ""
+            Snackbar.make(
+                prevView!!,
+                "${data.name.take(24)}${testEllipsize} Added!",
+                Snackbar.LENGTH_LONG
+            )
+                .show()
+            data.edited = null
+            TodoListFragment.viewModel.insertTodo(data)
         } else {
-            TodoListFragment.viewModel.updateTodo(data, this.data.id, prevView!!)
+            val testEllipsize = if (data.name.length > 24) "..." else ""
+            Snackbar.make(
+                prevView!!,
+                "${data.name.take(24)}${testEllipsize} Updated!",
+                Snackbar.LENGTH_LONG
+            )
+                .show()
+            Log.d("test", data.toString())
+            TodoListFragment.viewModel.updateTodo(data)
         }
     }
 }

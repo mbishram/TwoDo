@@ -1,6 +1,7 @@
 package id.ac.unhas.twodo.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import id.ac.unhas.twodo.R
 import id.ac.unhas.twodo.model.Todo
 import id.ac.unhas.twodo.ui.dialog.EditDialogFragment
@@ -20,15 +22,13 @@ class TodoListFragment : Fragment() {
     }
 
     private lateinit var adapter: TodoAdapter
-    private lateinit var viewModelFactory: TodoViewModelFactory
     private lateinit var linearLayoutManager: LinearLayoutManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModelFactory = TodoViewModelFactory(TodoRepository())
-        viewModel = ViewModelProvider(this, viewModelFactory).get(TodoViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(TodoViewModel::class.java)
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_todo_list, container, false)
@@ -37,8 +37,9 @@ class TodoListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getData().observe(viewLifecycleOwner, Observer {
-            adapter = TodoAdapter(ArrayList(it))
+        viewModel.getTodos()?.observe(viewLifecycleOwner, Observer {
+            Log.d("test", it.toString())
+            adapter = TodoAdapter(it)
             rv_todo.adapter = adapter
 
             adapter.setOnItemClickCallback(object : TodoAdapter.OnItemClickCallback {
@@ -79,7 +80,15 @@ class TodoListFragment : Fragment() {
                 dialog.dismiss()
             }
             .setPositiveButton(resources.getString(R.string.accept)) { dialog, which ->
-                viewModel.deleteData(data, requireView())
+                val testEllipsize = if (data.name.length > 24) "..." else ""
+                Snackbar.make(
+                    requireView(),
+                    "${data.name.take(24)}${testEllipsize} Deleted!",
+                    Snackbar.LENGTH_LONG
+                )
+                    .show()
+
+                viewModel.deleteTodo(data)
             }
             .show()
     }

@@ -1,29 +1,33 @@
 package id.ac.unhas.twodo.ui
 
-import android.view.View
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import id.ac.unhas.twodo.database.TodoRepository
 import id.ac.unhas.twodo.model.Todo
 
-class TodoViewModel(private val repository: TodoRepository) : ViewModel() {
+class TodoViewModel(application: Application) : AndroidViewModel(application) {
+    private var todoRepository = TodoRepository(application)
+    private var todos: LiveData<List<Todo>>? = todoRepository.getTodos()
 
-    fun getData(): MutableLiveData<ArrayList<Todo>> {
-        return repository.getTodo()
+
+    fun getTodos(): LiveData<List<Todo>>? {
+        return todos
     }
 
-    fun deleteData(item: Todo, view: View) {
-        repository.deleteTodo(item, view)
+    fun insertTodo(todo: Todo) {
+        todoRepository.insert(todo)
     }
 
-    fun deleteAllData(view: View) {
-        repository.deleteAllTodo(view)
+    fun deleteTodo(todo: Todo) {
+        todoRepository.delete(todo)
     }
 
-    fun addData(item: Todo, view: View) {
-        repository.addTodo(item, view)
+    fun updateTodo(todo: Todo) {
+        todoRepository.update(todo)
     }
 
-    fun updateTodo(item: Todo, id: Int, view: View) {
-        repository.updateTodo(item, id, view)
+    fun deleteAllTodos() {
+        todoRepository.deleteAll()
     }
 }

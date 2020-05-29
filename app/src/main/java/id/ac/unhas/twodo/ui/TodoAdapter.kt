@@ -8,7 +8,7 @@ import id.ac.unhas.twodo.R
 import id.ac.unhas.twodo.model.Todo
 import kotlinx.android.synthetic.main.todo_item.view.*
 
-class TodoAdapter(private val listTodo: ArrayList<Todo>) :
+class TodoAdapter(private val listTodo: List<Todo>) :
     RecyclerView.Adapter<TodoAdapter.TodoHolder>() {
     private lateinit var onItemClickCallback: OnItemClickCallback
 
