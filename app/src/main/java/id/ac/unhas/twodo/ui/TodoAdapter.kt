@@ -3,14 +3,23 @@ package id.ac.unhas.twodo.ui
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import id.ac.unhas.twodo.R
 import id.ac.unhas.twodo.model.Todo
 import kotlinx.android.synthetic.main.todo_item.view.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class TodoAdapter(private val listTodo: List<Todo>) :
-    RecyclerView.Adapter<TodoAdapter.TodoHolder>() {
+    RecyclerView.Adapter<TodoAdapter.TodoHolder>(), Filterable {
+    companion object {
+        var isFiltered = false
+    }
+
     private lateinit var onItemClickCallback: OnItemClickCallback
+    private var todoFilteredList = listOf<Todo>()
 
     inner class TodoHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(itemTodo: Todo) {
@@ -40,10 +49,20 @@ class TodoAdapter(private val listTodo: List<Todo>) :
         return TodoHolder(view)
     }
 
-    override fun getItemCount(): Int = listTodo.size
+    override fun getItemCount(): Int {
+        return if (isFiltered) {
+            todoFilteredList.size
+        } else {
+            listTodo.size
+        }
+    }
 
     override fun onBindViewHolder(holder: TodoHolder, position: Int) {
-        holder.bind(listTodo[position])
+        if (isFiltered) {
+            holder.bind(todoFilteredList[position])
+        } else {
+            holder.bind(listTodo[position])
+        }
     }
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
@@ -52,5 +71,36 @@ class TodoAdapter(private val listTodo: List<Todo>) :
 
     interface OnItemClickCallback {
         fun onItemClicked(data: Todo)
+    }
+
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val keywords = constraint.toString()
+                if (keywords.isEmpty())
+                    isFiltered = false
+                else {
+                    isFiltered = true
+                    val filteredList = ArrayList<Todo>()
+                    for (todo in listTodo) {
+                        if (todo.toString().toLowerCase(Locale.ROOT)
+                                .contains(keywords.toLowerCase(Locale.ROOT))
+                        )
+                            filteredList.add(todo)
+                    }
+                    todoFilteredList = filteredList
+                }
+
+                val filterResults = FilterResults()
+                filterResults.values = todoFilteredList
+                return filterResults
+            }
+
+            @Suppress("UNCHECKED_CAST")
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                todoFilteredList = results?.values as List<Todo>
+                notifyDataSetChanged()
+            }
+        }
     }
 }

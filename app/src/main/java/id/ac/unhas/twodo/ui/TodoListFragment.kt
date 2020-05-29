@@ -2,7 +2,6 @@ package id.ac.unhas.twodo.ui
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,9 +21,9 @@ import kotlinx.android.synthetic.main.fragment_todo_list.*
 class TodoListFragment : Fragment() {
     companion object {
         lateinit var viewModel: TodoViewModel
+        lateinit var adapter: TodoAdapter
     }
 
-    private lateinit var adapter: TodoAdapter
     private lateinit var linearLayoutManager: LinearLayoutManager
 
     override fun onCreateView(
@@ -49,7 +48,6 @@ class TodoListFragment : Fragment() {
                     MainActivity.sortDue(it)
                 }
 
-            Log.d("test", sortedList.toString())
             adapter = TodoAdapter(sortedList)
             rv_todo.adapter = adapter
 

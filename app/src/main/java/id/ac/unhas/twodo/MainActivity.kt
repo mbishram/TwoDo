@@ -1,5 +1,7 @@
 package id.ac.unhas.twodo
 
+import android.app.SearchManager
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.view.Menu
@@ -7,13 +9,15 @@ import android.view.MenuItem
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import id.ac.unhas.twodo.model.Todo
+import id.ac.unhas.twodo.ui.TodoAdapter
 import id.ac.unhas.twodo.ui.TodoListFragment
 import id.ac.unhas.twodo.ui.dialog.EditDialogFragment
 import kotlinx.android.synthetic.main.activity_main.*
-import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 class MainActivity : AppCompatActivity() {
@@ -35,19 +39,20 @@ class MainActivity : AppCompatActivity() {
         fun sortDue(listData: List<Todo>): List<Todo> {
             return if (isSortByDueTimeAsc) {
                 listData.sortedBy {
-                    LocalDate.parse(
-                        "${it.dueDate} ${it.dueTime}",
-                        DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")
+                    LocalDateTime.parse(
+                        "${it.dueDate}/${it.dueTime}",
+                        DateTimeFormatter.ofPattern("dd/MM/yyyy/HH:mm")
                     )
                 }
             } else {
                 listData.sortedByDescending {
-                    LocalDate.parse(
-                        "${it.dueDate} ${it.dueTime}",
-                        DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")
+                    LocalDateTime.parse(
+                        "${it.dueDate}/${it.dueTime}",
+                        DateTimeFormatter.ofPattern("dd/MM/yyyy/HH:mm")
                     )
                 }
             }
+
         }
     }
 
@@ -64,15 +69,34 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
-        return true
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val searchView = (menu.findItem(R.id.action_search)).actionView as SearchView
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
+        searchView.queryHint = "Search todo"
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                searchView.clearFocus()
+                TodoListFragment.adapter.filter.filter(query)
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                TodoListFragment.adapter.filter.filter(newText)
+                return false
+            }
+        })
+
+        searchView.setOnCloseListener {
+            TodoAdapter.isFiltered = false
+            true
+        }
+
+        return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
         when (item.itemId) {
-            R.id.action_search -> Unit
             R.id.action_delete_all -> showAlert(this.findViewById(R.id.main_activity))
             R.id.action_sort_date -> {
                 isSortByDateCreatedAsc = true
@@ -98,6 +122,7 @@ class MainActivity : AppCompatActivity() {
                 isSortByDueTimeAsc = false
                 isSortByDueTimeDesc = true
             }
+            else -> Unit
         }
 
         updateObserver()
