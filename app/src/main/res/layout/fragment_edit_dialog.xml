@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.dialog.EditDialogFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_form"
+            app:cardBackgroundColor="@android:color/white"
+            style="@style/Widget.MaterialComponents.CardView"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/card_padding"
+                android:paddingRight="@dimen/card_padding"
+                android:paddingTop="@dimen/between_text_lg"
+                android:paddingBottom="@dimen/between_text_lg">
+
+                <TextView
+                    android:id="@+id/txt_form_title"
+                    android:textAlignment="center"
+                    style="@style/TextAppearance.AppCompat.Title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="@string/add_data"
+                    android:layout_marginBottom="@dimen/between_text_lg" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/name_label"
+                    app:boxBackgroundColor="@android:color/white"
+                    android:layout_marginBottom="@dimen/between_text">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/input_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/note_label"
+                    app:boxBackgroundColor="@android:color/white"
+                    android:layout_marginBottom="@dimen/between_text">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/input_note"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/due_date_label"
+                    app:boxBackgroundColor="@android:color/white"
+                    android:layout_marginBottom="@dimen/between_text"
+                    app:endIconMode="custom"
+                    app:endIconDrawable="@drawable/baseline_arrow_drop_down_24">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/input_due_date"
+                        android:focusable="false"
+                        android:cursorVisible="false"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/due_time_label"
+                    app:boxBackgroundColor="@android:color/white"
+                    android:layout_marginBottom="@dimen/between_text_sm"
+                    app:endIconMode="custom"
+                    app:endIconDrawable="@drawable/baseline_arrow_drop_down_24">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/input_due_time"
+                        android:focusable="false"
+                        android:cursorVisible="false"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:theme="@style/primaryChecked"
+                    android:id="@+id/txt_form_reminder"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/remind_me"
+                    android:layout_marginBottom="@dimen/between_text" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center_horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/cancel_form"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/cancel_form"
+                        style="?attr/materialButtonOutlinedStyle"
+                        app:rippleColor="@color/secondary_button_ripple"
+                        android:textColor="@color/secondaryTextColor"
+                        android:padding="@dimen/card_padding"
+                        android:layout_marginEnd="@dimen/between_text_lg" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/save_form"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/save_form"
+                        android:padding="@dimen/card_padding"
+                        style="?attr/materialButtonOutlinedStyle" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/edt_thief"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true" />
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+
+</ScrollView>

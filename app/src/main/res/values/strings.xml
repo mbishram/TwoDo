@@ -4,6 +4,23 @@
     <string name="sort_by_date">Sort by Date (ASC)</string>
     <string name="sort_by_due">Sort by Due Data (ASC)</string>
     <string name="search">Search</string>
-    <string name="create_date">Create: %1$s</string>
-    <string name="edited_date">Edit: %1$s</string>
+    <string name="create_date">Created at %1$s</string>
+    <string name="edited_date">Edited at %1$s</string>
+    <string name="due">Due at %1$s and %2$s</string>
+    <string name="delete_alert_title">Are you sure?</string>
+    <string name="delete_alert_msg">It will gone forever y\'know</string>
+    <string name="accept">Sure!</string>
+    <string name="decline">Nevermind</string>
+    <string name="edit_data">Edit Todo</string>
+    <string name="add_data">Add Todo</string>
+    <string name="name_label">Title</string>
+    <string name="note_label">Note</string>
+    <string name="due_date_label">Due date</string>
+    <string name="due_time_label">Due time</string>
+    <string name="remind_me">Remind me 1 hour before due time</string>
+    <string name="cancel_form">Cancel</string>
+    <string name="save_form">Save</string>
+    <string name="delete_all">Delete All</string>
+    <string name="delete_alert_title_all">Delete all of Todos?</string>
+    <string name="delete_alert_msg_all">Are you sure about this?</string>
 </resources>

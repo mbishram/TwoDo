@@ -10,18 +10,27 @@ import kotlinx.android.synthetic.main.todo_item.view.*
 
 class TodoAdapter(private val listTodo: ArrayList<Todo>) :
     RecyclerView.Adapter<TodoAdapter.TodoHolder>() {
+    private lateinit var onItemClickCallback: OnItemClickCallback
 
-    class TodoHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class TodoHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(itemTodo: Todo) {
             with(itemView) {
                 txt_todo_name.text = itemTodo.name
                 txt_todo_desc.text = itemTodo.desc
-                txt_todo_due.text = itemTodo.dueDate
+                txt_todo_due.text = String.format(
+                    resources.getString(R.string.due),
+                    itemTodo.dueDate,
+                    itemTodo.dueTime
+                )
                 txt_todo_create.text =
                     String.format(resources.getString(R.string.create_date), itemTodo.created)
                 txt_todo_edit.text = if (itemTodo.edited != null)
                     String.format(resources.getString(R.string.edited_date), itemTodo.edited)
                 else String.format(resources.getString(R.string.edited_date), "Not yet edited")
+
+                card_todo.setOnClickListener {
+                    onItemClickCallback.onItemClicked(itemTodo)
+                }
             }
         }
     }
@@ -37,4 +46,11 @@ class TodoAdapter(private val listTodo: ArrayList<Todo>) :
         holder.bind(listTodo[position])
     }
 
+    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
+        this.onItemClickCallback = onItemClickCallback
+    }
+
+    interface OnItemClickCallback {
+        fun onItemClicked(data: Todo)
+    }
 }

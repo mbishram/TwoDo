@@ -3,6 +3,8 @@ package id.ac.unhas.twodo.dummy
 import id.ac.unhas.twodo.model.Todo
 
 object DummyData {
+    private val id = arrayOf(1, 2, 3, 4, 5, 6, 7, 8)
+
     private val todoNames = arrayOf(
         "Take the Groceries Out",
         "Take the Groceries Out Part 2",
@@ -26,36 +28,58 @@ object DummyData {
     )
 
     private val todoDue = arrayOf(
-        "12 Maret 2001",
-        "42 Maret 3924",
-        "1 April 2020",
-        "12 Agustus 1945",
-        "2 Januari 2012",
-        "5 September 2101",
-        "4 Agustus 2929",
-        "13 Desember 2019"
+        "22/12/2016",
+        "22/12/2016",
+        "31/11/2023",
+        "06/06/2020",
+        "23/02/2016",
+        "12/10/2018",
+        "11/05/2015",
+        "18/01/2020"
     )
 
     private val created = arrayOf(
-        "12 Desember 2001",
-        "32 Maret 3924",
-        "1 April 2032",
-        "33 September 1253",
-        "53 Agustur 2012",
-        "20 Januari 2101",
-        "5 Agustus 2020",
-        "31 Desember 2019"
+        "22/11/2016",
+        "22/12/2016",
+        "31/11/2023",
+        "06/06/2020",
+        "23/02/2016",
+        "12/10/2018",
+        "11/05/2015",
+        "18/01/2020"
     )
 
     private val edited = arrayOf(
-        "13 Desember 2001",
+        "22/11/2016",
+        "22/12/2016",
+        null,
+        "06/06/2020",
+        "23/02/2016",
         null,
         null,
-        null,
-        "53 Agustur 2012",
-        null,
-        "12 Agustus 2020",
-        "32 Desember 2019"
+        "18/01/2200"
+    )
+
+    private val todoTime = arrayOf(
+        "12:53",
+        "01:00",
+        "15:22",
+        "03:03",
+        "02:20",
+        "12:30",
+        "10:00",
+        "00:00"
+    )
+
+    private val remind = arrayOf(
+        true,
+        true,
+        false,
+        true,
+        false,
+        false,
+        true,
+        true
     )
 
     val listData: ArrayList<Todo>
@@ -63,11 +87,14 @@ object DummyData {
             val list = arrayListOf<Todo>()
             for (position in todoNames.indices) {
                 val todo = Todo()
+                todo.id = id[position]
                 todo.name = todoNames[position]
                 todo.desc = todoDesc[position]
                 todo.dueDate = todoDue[position]
                 todo.created = created[position]
                 todo.edited = edited[position]
+                todo.dueTime = todoTime[position]
+                todo.remind = remind[position]
                 list.add(todo)
             }
             return list

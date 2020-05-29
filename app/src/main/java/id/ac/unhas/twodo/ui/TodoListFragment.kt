@@ -8,11 +8,18 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import id.ac.unhas.twodo.R
+import id.ac.unhas.twodo.model.Todo
+import id.ac.unhas.twodo.ui.dialog.EditDialogFragment
 import kotlinx.android.synthetic.main.fragment_todo_list.*
 
 class TodoListFragment : Fragment() {
-    private lateinit var viewModel: TodoViewModel
+    companion object {
+        lateinit var viewModel: TodoViewModel
+    }
+
+    private lateinit var adapter: TodoAdapter
     private lateinit var viewModelFactory: TodoViewModelFactory
     private lateinit var linearLayoutManager: LinearLayoutManager
 
@@ -31,11 +38,49 @@ class TodoListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.getData().observe(viewLifecycleOwner, Observer {
-            rv_todo.adapter = TodoAdapter(ArrayList(it))
+            adapter = TodoAdapter(ArrayList(it))
+            rv_todo.adapter = adapter
+
+            adapter.setOnItemClickCallback(object : TodoAdapter.OnItemClickCallback {
+                override fun onItemClicked(data: Todo) {
+                    showDialog(data)
+                }
+            })
         })
 
         linearLayoutManager = LinearLayoutManager(context)
         rv_todo.layoutManager = linearLayoutManager
     }
 
+    fun showDialog(data: Todo) {
+        val items = arrayOf("Edit", "Delete")
+        MaterialAlertDialogBuilder(context)
+            .setItems(items) { dialog, which ->
+                when (items[which]) {
+                    "Edit" -> showForm(data)
+                    "Delete" -> showDelete(data)
+                    else -> Unit
+                }
+            }
+            .show()
+    }
+
+    private fun showForm(data: Todo?) {
+        val fragmentManager = childFragmentManager
+        val newFragment = EditDialogFragment(data, view)
+        newFragment.show(fragmentManager, "showForm")
+    }
+
+    private fun showDelete(data: Todo) {
+        MaterialAlertDialogBuilder(context)
+            .setTitle(resources.getString(R.string.delete_alert_title))
+            .setMessage(resources.getString(R.string.delete_alert_msg))
+            .setNegativeButton(resources.getString(R.string.decline)) { dialog, which ->
+                dialog.dismiss()
+            }
+            .setPositiveButton(resources.getString(R.string.accept)) { dialog, which ->
+                viewModel.deleteData(data, requireView())
+            }
+            .show()
+    }
 }

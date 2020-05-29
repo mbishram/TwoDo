@@ -8,4 +8,5 @@
   <color name="secondaryDarkColor">#c79100</color>
   <color name="primaryTextColor">#000000</color>
   <color name="secondaryTextColor">#888888</color>
+  <color name="secondary_button_ripple">#DDDDDD</color>
 </resources>

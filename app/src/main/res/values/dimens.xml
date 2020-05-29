@@ -5,4 +5,5 @@
     <dimen name="between_text">8dp</dimen>
     <dimen name="card_padding">16dp</dimen>
     <dimen name="between_text_sm">2dp</dimen>
+    <dimen name="between_text_lg">20dp</dimen>
 </resources>
