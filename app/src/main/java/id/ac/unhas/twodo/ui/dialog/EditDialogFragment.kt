@@ -7,7 +7,6 @@ import android.app.TimePickerDialog.OnTimeSetListener
 import android.content.Context
 import android.os.Bundle
 import android.text.Editable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,7 +43,6 @@ class EditDialogFragment(private val data: Todo?, private val prevView: View?) :
                 calendar.set(Calendar.MONTH, monthOfYear)
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
                 input_due_date.text = toEditable(getDate())
-
             }
 
         val time =
@@ -94,8 +92,8 @@ class EditDialogFragment(private val data: Todo?, private val prevView: View?) :
             newTodo.desc = input_note.text.toString()
             newTodo.dueDate = input_due_date.text.toString()
             newTodo.dueTime = input_due_time.text.toString()
-            newTodo.created = getDate()
-            newTodo.edited = getDate()
+            newTodo.created = data?.created ?: getCurrentDate()
+            newTodo.edited = getCurrentDate()
             newTodo.remind = txt_form_reminder.isChecked
             submitData(newTodo)
         }
@@ -139,13 +137,20 @@ class EditDialogFragment(private val data: Todo?, private val prevView: View?) :
 
     private fun getDate(): String {
         val format = "dd/MM/yyyy"
-        val sdf = SimpleDateFormat(format, Locale.US)
+        val sdf = SimpleDateFormat(format, Locale.ROOT)
+        return sdf.format(calendar.time)
+    }
+
+    private fun getCurrentDate(): String {
+        val calendar = Calendar.getInstance()
+        val format = "dd/MM/yyyy"
+        val sdf = SimpleDateFormat(format, Locale.ROOT)
         return sdf.format(calendar.time)
     }
 
     private fun getTime(): String {
         val format = "HH:mm"
-        val sdf = SimpleDateFormat(format, Locale.US)
+        val sdf = SimpleDateFormat(format, Locale.ROOT)
         return sdf.format(calendar.time)
     }
 
@@ -174,7 +179,6 @@ class EditDialogFragment(private val data: Todo?, private val prevView: View?) :
                 Snackbar.LENGTH_LONG
             )
                 .show()
-            Log.d("test", data.toString())
             TodoListFragment.viewModel.updateTodo(data)
         }
     }
